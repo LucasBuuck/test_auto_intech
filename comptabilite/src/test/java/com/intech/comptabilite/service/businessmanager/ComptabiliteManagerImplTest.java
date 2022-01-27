@@ -2,6 +2,8 @@ package com.intech.comptabilite.service.businessmanager;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import com.intech.comptabilite.model.CompteComptable;
 import com.intech.comptabilite.model.EcritureComptable;
 import com.intech.comptabilite.model.JournalComptable;
 import com.intech.comptabilite.model.LigneEcritureComptable;
+import com.intech.comptabilite.model.SequenceEcritureComptable;
 import com.intech.comptabilite.service.exceptions.FunctionalException;
 
 @SpringBootTest
@@ -94,14 +97,7 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         vEcritureComptable.setDate(new Date());
         vEcritureComptable.setLibelle("Libelle");
-        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
-                                                                                 null, new BigDecimal(123),
-                                                                                 null));
-        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
-                                                                                 null, new BigDecimal(123),
-                                                              
-                                                                               null));
-        
+
         checkRgCompta5DateDiff(vEcritureComptable);
         checkRgCompta5CodeDiff(vEcritureComptable);
     }
@@ -126,5 +122,15 @@ public class ComptabiliteManagerImplTest {
         );
     }
     
+    
+    @Test
+    public void addReference () throws Exception {
+	    EcritureComptable vEcritureComptable;
+	    vEcritureComptable = new EcritureComptable();
+
+        manager.addReference(vEcritureComptable);
+        Assertions.assertNotNull(vEcritureComptable.getReference());
+    }
+
 
 }
