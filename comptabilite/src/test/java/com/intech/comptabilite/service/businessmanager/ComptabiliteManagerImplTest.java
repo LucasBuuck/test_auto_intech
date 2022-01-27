@@ -2,7 +2,6 @@ package com.intech.comptabilite.service.businessmanager;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import com.intech.comptabilite.model.CompteComptable;
 import com.intech.comptabilite.model.EcritureComptable;
 import com.intech.comptabilite.model.JournalComptable;
 import com.intech.comptabilite.model.LigneEcritureComptable;
-import com.intech.comptabilite.model.SequenceEcritureComptable;
 import com.intech.comptabilite.service.exceptions.FunctionalException;
 
 @SpringBootTest
