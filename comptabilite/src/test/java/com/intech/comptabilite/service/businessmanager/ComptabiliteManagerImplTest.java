@@ -133,6 +133,10 @@ public class ComptabiliteManagerImplTest {
 
         manager.addReference(vEcritureComptable);
         Assertions.assertNotNull(vEcritureComptable.getReference());
+        Assertions.assertEquals("AC-"+ (vEcritureComptable.getDate().getYear() + 1900) +"/00001", vEcritureComptable.getReference());
+        manager.addReference(vEcritureComptable);
+        Assertions.assertEquals("AC-"+ (vEcritureComptable.getDate().getYear() + 1900) +"/00002", vEcritureComptable.getReference());
+
     }
 
 
