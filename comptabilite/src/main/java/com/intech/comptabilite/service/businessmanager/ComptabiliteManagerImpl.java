@@ -1,6 +1,7 @@
 package com.intech.comptabilite.service.businessmanager;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -101,6 +102,11 @@ public class ComptabiliteManagerImpl implements ComptabiliteManager {
      */
     // TODO tests à compléter
     public void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException {
+    	if(pEcritureComptable == null) {
+    		return;
+    	}
+    	//System.out.println(pEcritureComptable);
+
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
         Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
         if (!vViolations.isEmpty()) {
@@ -137,10 +143,23 @@ public class ComptabiliteManagerImpl implements ComptabiliteManager {
                 "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
         }
 
-        // TODO ===== RG_Compta_5 : Format et contenu de la référence
-        // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
+        checkRgCompta5(pEcritureComptable);
     }
 
+    public void checkRgCompta5 (EcritureComptable pEcritureComptable) throws FunctionalException {
+    	if(pEcritureComptable.getReference() == null) return;
+        String[] journalReference = pEcritureComptable.getReference().split("\\p{Punct}");
+	    String code = journalReference[0];	       
+	    String year = journalReference[1];
+
+        if(!pEcritureComptable.getJournal().getCode().equals(code)) {
+            throw new FunctionalException("Le code journal de référence différent du code journal.");
+        }
+
+        if(pEcritureComptable.getDate().getYear() != Integer.parseInt(year)) {
+            throw new FunctionalException("Année de référence différent de l'année d'écriture");
+        }
+    }
 
     /**
      * Vérifie que l'Ecriture comptable respecte les règles de gestion liées au contexte

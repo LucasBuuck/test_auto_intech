@@ -29,5 +29,5 @@ public class CompteComptableServiceTest {
 		
         Assertions.assertEquals("three", foundAccount.getLibelle());
         Assertions.assertNull(notFoundAccount);
-	    }
+	}
 }

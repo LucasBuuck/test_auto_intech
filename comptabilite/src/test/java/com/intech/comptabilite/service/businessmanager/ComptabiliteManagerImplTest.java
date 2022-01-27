@@ -86,5 +86,29 @@ public class ComptabiliteManagerImplTest {
         );
                 
     }
+   
+    @Test
+    public void checkRgCompta5 () throws Exception {
+        EcritureComptable vEcritureComptable;
+        vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setLibelle("Libelle");
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                                                                                 null, new BigDecimal(123),
+                                                                                 null));
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                                                                                 null, new BigDecimal(123),
+                                                              
+                                                                               null));
+        vEcritureComptable.setReference("BQ-2016/00001");
+        
+        // Throw happens because "BQ" != "AC"
+        Assertions.assertThrows(FunctionalException.class,
+        		() -> {
+        			manager.checkRgCompta5(vEcritureComptable);
+        		}
+        );
+    }
 
 }

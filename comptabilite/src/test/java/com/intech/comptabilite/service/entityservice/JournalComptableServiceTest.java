@@ -28,5 +28,5 @@ public class JournalComptableServiceTest {
 		
         Assertions.assertEquals("three", foundJournal.getLibelle());
         Assertions.assertNull(notfoundJournal);
-	    }
+	}
 }
