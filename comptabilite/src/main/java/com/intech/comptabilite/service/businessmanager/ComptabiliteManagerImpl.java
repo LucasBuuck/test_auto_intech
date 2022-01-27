@@ -72,6 +72,18 @@ public class ComptabiliteManagerImpl implements ComptabiliteManager {
     // TODO à implémenter et à tester
     @Override
     public synchronized void addReference(EcritureComptable pEcritureComptable) {
+	    
+        Integer year = pEcritureComptable.getDate().getYear() + 1900;
+
+		try {
+	        int num = sequenceEcritureComptableService.getDernierValeurByCodeAndAnnee(pEcritureComptable.getJournal().getCode(), year);
+			System.out.println(num);
+		} catch (NotFoundException e) {
+			SequenceEcritureComptable seq = new SequenceEcritureComptable();
+			seq.setAnnee(year);
+			seq.setDerniereValeur(1);
+			pEcritureComptable.setReference(pEcritureComptable.getJournal().getCode() + "-" + year + "/" + "00001");
+		}
         // Bien se réferer à la JavaDoc de cette méthode !
     	
         /* Le principe :

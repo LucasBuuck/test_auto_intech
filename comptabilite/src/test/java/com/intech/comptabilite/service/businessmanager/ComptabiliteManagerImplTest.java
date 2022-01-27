@@ -125,8 +125,11 @@ public class ComptabiliteManagerImplTest {
     
     @Test
     public void addReference () throws Exception {
-	    EcritureComptable vEcritureComptable;
-	    vEcritureComptable = new EcritureComptable();
+    	  EcritureComptable vEcritureComptable;
+          vEcritureComptable = new EcritureComptable();
+          vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+          vEcritureComptable.setDate(new Date());
+          vEcritureComptable.setLibelle("Libelle");
 
         manager.addReference(vEcritureComptable);
         Assertions.assertNotNull(vEcritureComptable.getReference());
