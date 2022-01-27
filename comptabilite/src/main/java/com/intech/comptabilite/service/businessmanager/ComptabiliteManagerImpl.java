@@ -76,27 +76,22 @@ public class ComptabiliteManagerImpl implements ComptabiliteManager {
         Integer year = pEcritureComptable.getDate().getYear() + 1900;
 
 		try {
-	        int num = sequenceEcritureComptableService.getDernierValeurByCodeAndAnnee(pEcritureComptable.getJournal().getCode(), year);
-			System.out.println(num);
+			int num = sequenceEcritureComptableService.getDernierValeurByCodeAndAnnee(pEcritureComptable.getJournal().getCode(), year);
+			
+			SequenceEcritureComptable seq = new SequenceEcritureComptable(pEcritureComptable.getJournal().getCode(), year, num+1) ;
+			String s = pEcritureComptable.getJournal().getCode() + "-" + year + "/";
+			int nbDigits = (int) (Math.log10(num) + 1);
+			for(int i = 0; i < 5-nbDigits; i++) {
+				s+= "0"; 
+			}
+			s+= String.valueOf(num+1);
+			pEcritureComptable.setReference(s);
+			sequenceEcritureComptableService.upsert(seq);
 		} catch (NotFoundException e) {
-			SequenceEcritureComptable seq = new SequenceEcritureComptable();
-			seq.setAnnee(year);
-			seq.setDerniereValeur(1);
+			SequenceEcritureComptable seq = new SequenceEcritureComptable(pEcritureComptable.getJournal().getCode(), year, 1) ;
 			pEcritureComptable.setReference(pEcritureComptable.getJournal().getCode() + "-" + year + "/" + "00001");
+			sequenceEcritureComptableService.upsert(seq);
 		}
-        // Bien se réferer à la JavaDoc de cette méthode !
-    	
-        /* Le principe :
-                1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
-                    (table sequence_ecriture_comptable)
-                2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
-                        1. Utiliser le numéro 1.
-                    * Sinon :
-                        1. Utiliser la dernière valeur + 1
-                3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5)
-                4.  Enregistrer (insert/update) la valeur de la séquence en persitance
-                    (table sequence_ecriture_comptable)
-         */
     }
 
     /**
