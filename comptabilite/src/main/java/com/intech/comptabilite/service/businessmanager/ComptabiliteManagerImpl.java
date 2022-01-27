@@ -156,7 +156,7 @@ public class ComptabiliteManagerImpl implements ComptabiliteManager {
             throw new FunctionalException("Le code journal de référence différent du code journal.");
         }
 
-        if(pEcritureComptable.getDate().getYear() != Integer.parseInt(year)) {
+        if((pEcritureComptable.getDate().getYear() + 1900) != Integer.parseInt(year)) {
             throw new FunctionalException("Année de référence différent de l'année d'écriture");
         }
     }

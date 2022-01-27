@@ -1,3 +1,8 @@
+DROP TABLE IF EXISTS journal_comptable;
+DROP TABLE IF EXISTS sequence_ecriture_comptable;
+DROP TABLE IF EXISTS ecriture_comptable;
+DROP TABLE IF EXISTS compte_comptable;
+DROP TABLE IF EXISTS ligne_ecriture_comptable;
 
 CREATE TABLE journal_comptable (
                 code VARCHAR(5) NOT NULL,

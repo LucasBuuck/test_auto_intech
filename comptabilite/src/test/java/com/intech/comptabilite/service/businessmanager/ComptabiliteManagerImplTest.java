@@ -101,14 +101,30 @@ public class ComptabiliteManagerImplTest {
                                                                                  null, new BigDecimal(123),
                                                               
                                                                                null));
-        vEcritureComptable.setReference("BQ-2016/00001");
         
-        // Throw happens because "BQ" != "AC"
+        checkRgCompta5DateDiff(vEcritureComptable);
+        checkRgCompta5CodeDiff(vEcritureComptable);
+    }
+    
+    private void checkRgCompta5DateDiff (EcritureComptable vEcritureComptable) throws Exception {
+        vEcritureComptable.setReference("AC-2021/00001");
+     //Throw happens because 2021 != 2022 (new Date()) 
         Assertions.assertThrows(FunctionalException.class,
         		() -> {
         			manager.checkRgCompta5(vEcritureComptable);
         		}
         );
     }
+    
+    private void checkRgCompta5CodeDiff (EcritureComptable vEcritureComptable) throws Exception {
+        vEcritureComptable.setReference("BQ-2022/00001");
+     //Throw happens because "BQ" != "AC"
+        Assertions.assertThrows(FunctionalException.class,
+        		() -> {
+        			manager.checkRgCompta5(vEcritureComptable);
+        		}
+        );
+    }
+    
 
 }
